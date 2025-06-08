@@ -2,6 +2,7 @@
   import Hero from '../components/Hero.vue'
   import { reactive } from 'vue';
   import Loading from 'vue-loading-overlay';
+  import axios from 'axios';
 
    const state = reactive({
         name: '',
@@ -99,26 +100,30 @@
 
                 <div class="col-md-6">
                   <label for="name-field" class="pb-2">Your Name</label>
-                  <input type="text" name="name" id="name-field" class="form-control" required="">
+                  <input type="text" name="name" id="name-field" class="form-control" v-model="state.name">
+                   <p class="text-danger" v-if="state.errors && state.errors.name">{{ state.errors.name[0] }}</p>
                 </div>
 
                 <div class="col-md-6">
                   <label for="email-field" class="pb-2">Your Email</label>
-                  <input type="email" class="form-control" name="email" id="email-field" required="">
+                  <input type="email" class="form-control" name="email" id="email-field" v-model="state.email">
+                   <p class="text-danger" v-if="state.errors && state.errors.email">{{ state.errors.email[0] }}</p>
                 </div>
 
                 <div class="col-md-12">
                   <label for="subject-field" class="pb-2">Subject</label>
-                  <input type="text" class="form-control" name="subject" id="subject-field" required="">
+                  <input type="text" class="form-control" name="subject" id="subject-field" v-model="state.subject">
+                   <p class="text-danger" v-if="state.errors && state.errors.subject">{{ state.errors.subject[0] }}</p>
                 </div>
 
                 <div class="col-md-12">
                   <label for="message-field" class="pb-2">Message</label>
-                  <textarea class="form-control" name="message" rows="10" id="message-field" required=""></textarea>
+                  <textarea class="form-control" name="message" rows="10" id="message-field" v-model="state.message"></textarea>
+                   <p class="text-danger" v-if="state.errors && state.errors.message">{{ state.errors.message[0] }}</p>
                 </div>
 
                 <div class="col-md-12 text-center">
-                  <button type="submit">Send Message</button>
+                  <button class="btn btn-primary" type="submit">Send Message</button>
                 </div>
 
               </div>

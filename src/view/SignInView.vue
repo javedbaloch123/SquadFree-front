@@ -57,8 +57,8 @@ const submitForm = async () => {
   <Loading v-if="state.isLoading" :active="true" :is-full-page="true" />
   <div class="page-title accent-background">
     <div class="container position-relative">
-      <h1>Sign Up</h1>
-      <div class="row">
+      <h1 data-aos="zoom-in" data-aos-delay="200" >Sign In</h1>
+      <div class="row" data-aos="fade-up" data-aos-delay="100">
         <form @submit.prevent="submitForm">
           
           <div class="mb-3">
