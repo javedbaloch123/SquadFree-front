@@ -1,8 +1,55 @@
 <script setup>
   import Hero from '../components/Hero.vue'
+  import { reactive } from 'vue';
+  import Loading from 'vue-loading-overlay';
+
+   const state = reactive({
+        name: '',
+        email:'',
+        subject:'',
+        message:'',
+        isLoading:false,
+        errors:[],
+   });
+
+   const  submitForm = async()=>{
+        try {
+          state.isLoading = true;
+            const data = {
+               name:state.name,
+               email:state.email,
+               subject:state.subject,
+               message:state.message,
+            }
+            
+           const response = await axios.post('http://127.0.0.1:8000/api/contact',data)
+           state.errors = response.data.error;
+           console.log(response.data);
+           if(response.data.status == true){       
+             swal({
+              title: 'Message Sent Successfully!',
+              text: 'We will contact you soon.',
+              icon: 'success',
+              confirmButtonText: 'OK'
+            });
+            state.errors = [];
+             state.name = '',
+             state.email = '',
+             state.subject = ''
+             state.message = ''
+           
+           }
+
+        } catch (error) {
+           console.log(error); 
+        }finally{
+          state.isLoading = false;
+        }
+   }
 </script>
 
 <template>
+      <Loading v-if="state.isLoading" :active="true" :is-full-page="true"/>
      <Hero title="Contact Us" id="contact"/>
      <section id="contact" class="contact section">
       <!-- Section Title -->
@@ -47,7 +94,7 @@
           </div>
 
           <div class="col-lg-7">
-            <form action="forms/contact.php" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
+            <form  @submit.prevent="submitForm" data-aos="fade-up" data-aos-delay="200">
               <div class="row gy-4">
 
                 <div class="col-md-6">
@@ -71,10 +118,6 @@
                 </div>
 
                 <div class="col-md-12 text-center">
-                  <div class="loading">Loading</div>
-                  <div class="error-message"></div>
-                  <div class="sent-message">Your message has been sent. Thank you!</div>
-
                   <button type="submit">Send Message</button>
                 </div>
 

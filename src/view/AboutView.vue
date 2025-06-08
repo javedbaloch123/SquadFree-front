@@ -6,12 +6,7 @@ import { onMounted } from "vue";
 
 onMounted(async () => {
   new PureCounter();
-
-  try {
-    const response = await axios.get("http://127.0.0.1:8000/api/authenticate");
-    console.log(response);
-
-  } catch (error) {}
+ 
 });
 </script>
 
